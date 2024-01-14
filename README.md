@@ -5,4 +5,4 @@
 * Arquivo .so `/usr/local/lib64/`
 * Arquivo .h `/usr/local/include/`
 * Flag usada na compilação dos projetos que usam a bibloteca: `-lstrutils`
-* Ex: `clang -Wall -Wextra --pedantic -std=c99 -lstrutils -o arquivo arquivo.c`
+* Ex: `$ clang -Wall -Wextra --pedantic -std=c99 -lstrutils -o arquivo arquivo.c`
