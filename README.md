@@ -1,6 +1,5 @@
 # StrUtils
- Biblioteca de manipulação de strings para meus projetos de aprendizado em C
-#
+## Biblioteca de manipulação de strings para meus projetos de aprendizado em C
 * Biblioteca criada com o comando: `clang -shared -fPIC -o libstrutils.so strutils.c`
 * Localização dos arquivos no meu sistema para usar com meus projetos:
 * Arquivo .so `/usr/local/lib64/`
