@@ -8,11 +8,6 @@
 #include <stdbool.h>
 
 
-/* Dá-nos o tipo de erro na função str_remove
- * caso retorne NULL */
-enum str_remove_error{Null, O_Range, Q_Range};
-
-
 /* Cuida de capitalizar primeira letra de palavra
  * ola -> Ola */
 void title_case_word(char *word);
@@ -31,41 +26,39 @@ void convert_to_upper(char *c);
 void convert_to_lower(char *c);
 
 
-/* Cuida de inserir substring em dada posição de string
- * Exemplo: string -> texto, substring ->Pre,
- * Resultado -> Pretexto. Não sobescreve (remove) apenas adiciona
- * String original fica igual, cria uma nova
- * string que tem que ser liberada (free()) depois de usar */
-char *str_insert(char *str, char *substr, size_t position);
-
-
-/* Cuida de sobescrever parte da string com substring
- * Exemplo: string -> Contexto, substring -> Pre,
- * Resultado -> Pretexto. String original fica igual, cria uma nova
- * string que tem que ser liberada (free()) depois de usar */
-char *str_replace(char *original, char *replacement, size_t position);
-
-
-/* Cuida de remover dada parte da string. Offstet é a posição
- * inicial para começar a remover, Quantity é a quantidade de
- * caracteres, a partir de Offstet incluíndo, para remover. Offset começa
- * a contagem a partir o 0 e Quantity começa a contagem a partir
- * de 1. Exemplo:
+/* Cuida de inserir uma substring em uma string depois de dada substring
+ * Exemplo:
  *
- * char *string = "Contexto e Pretexto";
- * char *new_str = NULL;
- * new_str = str_remove(string, 0, 11); -> new_str == "Pretexto";
+ * string -> "Programar em C é bom!"
+ * substring para inserir -> " demais"
+ * inserir depois de substring -> "bom"
+ * Resultado -> "Programar em C é bom demais!"
  *
- * new_str = str_remove(string, 8, 11) -> new_str == "Contexto";
- *
- * Erro -> Q_Range (Quantity_Range)
- * new_str = str_remove(string, 8, 12) -> new_str == NULL; */
-char *str_remove(char *str, int offset, int quantity);
+ * Retorna uma nova string, a string original fica igual */
+char *str_insert(char *str, char *after, char *insert);
 
 
-/* Faz par com a função str_remove, para pegar o tipo de
- * erro quando str_remove retorna NULL */
-enum str_remove_error get_enum_error(void);
+/* Cuida de substituir susbstring por outra subtring em string
+ * Exemplo:
+ *
+ * string -> "Adoro programar em Python, é bom demais!"
+ * substring para remover -> "Python"
+ * substring para inserir -> "C"
+ * Resultado -> "Adoro programar em C, é bom demais!"
+ *
+ * Retorna uma nova string, a sting original fica igual */
+char *str_replace(char *str, char *old_sub, char *new_sub);
+
+
+/* Cuida de remover substring em string
+ * Exemplo:
+ *
+ * string -> "Eu acertei todas as respostas na prova, mas só copiando!"
+ * substring para remover -> ", mas só copiando"
+ * Resultado -> "Eu acertei todas as respostas na prova!"
+ *
+ * Retorna uma nova string, a string original fica igual */
+char *str_remove(char *str, char *remove);
 
 
 /* Cuida de verificar se palavra (ou frase)

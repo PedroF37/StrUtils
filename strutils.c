@@ -1,9 +1,6 @@
 #include "strutils.h"
 
 
-static enum str_remove_error ERROR;
-
-
 void title_case_word(char *word)
 {
     if (*word != '\0')
@@ -65,93 +62,74 @@ void convert_to_lower(char *c)
 }
 
 
-char *str_insert(char *str, char *substr, size_t position)
+char *str_insert(char *str, char *after, char *insert)
 {
+    char *match = strstr(str, after);
+    if (match == NULL)
+    {
+        return(NULL);
+    }
+
     size_t str_len = strlen(str);
-    size_t substr_len = strlen(substr);
+    size_t after_len = strlen(after);
+    size_t insert_len = strlen(insert);
 
-    if ((int)position < 0 || position > str_len)
-    {
-        return(NULL);
-    }
-
-    char *new_str = (char *)malloc(str_len +
-        substr_len + 1 * sizeof(char));
+    char *new_str = (char *)malloc(str_len + insert_len + 1);
     if (new_str == NULL)
     {
         return(NULL);
     }
 
-    strncpy(new_str, str, position);
-    strcat(new_str, substr);
-    strcat(new_str, str + position);
-
+    strncpy(new_str, str, match - str + after_len);
+    strcat(new_str, insert);
+    strcat(new_str, match + after_len);
     return(new_str);
 }
 
 
-char *str_replace(char *original, char *replacement, size_t position)
+char *str_replace(char *str, char *old_sub, char *new_sub)
 {
-    size_t orig_len = strlen(original);
-    size_t rep_len = strlen(replacement);
-
-    if ((int)position < 0 || position == orig_len
-        || position + rep_len > orig_len)
+    char *match = strstr(str, old_sub);
+    if (match == NULL)
     {
         return(NULL);
     }
 
-    char *new_str = (char *)malloc(orig_len + 1 * sizeof(char));
+    size_t old_len = strlen(old_sub);
+    char *new_str = (char *)malloc(strlen(str) -
+        old_len + strlen(new_sub) + 1);
     if (new_str == NULL)
     {
         return(NULL);
     }
 
-    size_t size = position + rep_len;
-    strncpy(new_str, original, position);
-    strcat(new_str, replacement);
-    strcat(new_str, original + size);
+    strncpy(new_str, str, match - str);
+    strcat(new_str, new_sub);
+    strcat(new_str, match + old_len);
     return(new_str);
 }
 
 
-char *str_remove(char *str, int offset,
-    int quantity)
+char *str_remove(char *str, char *remove)
 {
+    char *match = strstr(str, remove);
+    if (match == NULL)
+    {
+        return(NULL);
+    }
+
     size_t str_len = strlen(str);
-    size_t leftover = str_len - offset;
+    size_t remove_len = strlen(remove);
 
-    if (offset < 0|| (size_t)offset > str_len)
-    {
-        ERROR = O_Range;
-        return(NULL);
-    }
-
-
-    if (quantity < 0 || (size_t)quantity > str_len ||
-        (size_t)quantity > leftover)
-    {
-        ERROR = Q_Range;
-        return(NULL);
-    }
-
-    char *new_str = (char *)malloc(
-        str_len - quantity + 1 * sizeof(char));
+    char *new_str = (char *)malloc(str_len - remove_len + 1);
     if (new_str == NULL)
     {
-        ERROR = Null;
         return(NULL);
     }
 
-    strncpy(new_str, str, offset);
-    strcat(new_str, str + offset + quantity);
+    strncpy(new_str, str, match - str);
+    strcat(new_str, match + remove_len);
     return(new_str);
-}
-
-
-enum str_remove_error get_enum_error(void)
-{
-    return(ERROR);
 }
 
 
