@@ -38,6 +38,10 @@ void convert_to_lower(char *c);
 char *str_insert(char *str, char *after, char *insert);
 
 
+/* Cuida de inserir substring no inicio de string */
+char *insert_in_beginning(char *str, char *insert);
+
+
 /* Cuida de substituir susbstring por outra subtring em string
  * Exemplo:
  *
@@ -59,6 +63,10 @@ char *str_replace(char *str, char *old_sub, char *new_sub);
  *
  * Retorna uma nova string, a string original fica igual */
 char *str_remove(char *str, char *remove);
+
+
+/* Cuida de contar as palavras em string */
+int word_count(const char *str);
 
 
 /* Cuida de verificar se palavra (ou frase)

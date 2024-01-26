@@ -87,6 +87,22 @@ char *str_insert(char *str, char *after, char *insert)
 }
 
 
+char *insert_in_beginning(char *str, char *insert)
+{
+    size_t insert_len = strlen(insert);
+
+    char *new_str = (char *)malloc(strlen(str) + insert_len + 1);
+    if (new_str == NULL)
+    {
+        return(NULL);
+    }
+
+    strncpy(new_str, insert, insert_len);
+    strcat(new_str, str);
+    return(new_str);
+}
+
+
 char *str_replace(char *str, char *old_sub, char *new_sub)
 {
     char *match = strstr(str, old_sub);
@@ -130,6 +146,35 @@ char *str_remove(char *str, char *remove)
     strncpy(new_str, str, match - str);
     strcat(new_str, match + remove_len);
     return(new_str);
+}
+
+
+int word_count(const char *str)
+{
+    if (str == NULL || *str == '\0')
+    {
+        return(0);
+    }
+
+    int count = 0;
+    while (*str)
+    {
+        if (isspace(*str))
+        {
+            str++;
+        }
+        else
+        {
+            while (!isspace(*str))
+            {
+                str++;
+            }
+
+            count++;
+        }
+    }
+
+    return(count);
 }
 
 
