@@ -81,6 +81,7 @@ char *str_insert(char *str, char *after, char *insert)
     }
 
     strncpy(new_str, str, match - str + after_len);
+    new_str[match - str + after_len] = '\0';
     strcat(new_str, insert);
     strcat(new_str, match + after_len);
     return(new_str);
@@ -98,6 +99,7 @@ char *insert_in_beginning(char *str, char *insert)
     }
 
     strncpy(new_str, insert, insert_len);
+    new_str[insert_len] = '\0';
     strcat(new_str, str);
     return(new_str);
 }
@@ -120,6 +122,7 @@ char *str_replace(char *str, char *old_sub, char *new_sub)
     }
 
     strncpy(new_str, str, match - str);
+    new_str[match - str] = '\0';
     strcat(new_str, new_sub);
     strcat(new_str, match + old_len);
     return(new_str);
@@ -144,6 +147,7 @@ char *str_remove(char *str, char *remove)
     }
 
     strncpy(new_str, str, match - str);
+    new_str[match -str] = '\0';
     strcat(new_str, match + remove_len);
     return(new_str);
 }
